@@ -10,7 +10,8 @@ public class SLAContract implements Contract {
 
     @Override
     public void verify(@NotNull LedgerTransaction tx) throws IllegalArgumentException {
-        System.out.println(tx);
-        // Verify that the transaction is valid.
+         // TODO Add validation steps...
+         // 1. Check inputs/output states
+         // 2. Ensure contract state has all the required fields.
     }
 }

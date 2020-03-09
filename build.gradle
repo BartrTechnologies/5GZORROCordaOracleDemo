@@ -65,6 +65,9 @@ sourceSets {
             srcDir 'src/main/java'
             java.outputDir = file('bin/main')
         }
+        resources {
+            srcDir "../config/dev"
+        }
     }
     test{
         java {
@@ -79,4 +82,9 @@ sourceSets {
             srcDir file('src/integration-test/java')
         }
     }
+}
+
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
 }

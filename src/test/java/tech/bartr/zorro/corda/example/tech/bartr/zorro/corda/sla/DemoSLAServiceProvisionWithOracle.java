@@ -4,11 +4,7 @@ import com.google.common.collect.ImmutableList;
 import net.corda.testing.node.MockNetwork;
 import net.corda.testing.node.MockNetworkParameters;
 import net.corda.testing.node.TestCordapp;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import tech.bartr.zorro.corda.example.tech.bartr.zorro.corda.sla.participants.OracleService;
@@ -56,16 +52,7 @@ public class DemoSLAServiceProvisionWithOracle {
     }
 
     @Test
-    public void testNodeDeploys() throws Exception {
+    public void runDemo() throws Exception {
         serviceConsumer.requestService(oracleService.getIdentity());
-
-        // Wait for the Service to be Provisioned
-        // TODO Add ServiceProvisioned Event Handler
-        Thread.sleep(10000);
-
-        OkHttpClient httpClient = new OkHttpClient();
-        Request request = new Request.Builder().url(serviceConsumer.getRequestedServiceURL()).build();
-        Response response = httpClient.newCall(request).execute();
-        Assert.assertTrue(response.isSuccessful());
     }
 }

@@ -10,7 +10,10 @@ public class ServiceProvidedContract implements Contract {
 
     @Override
     public void verify(@NotNull LedgerTransaction tx) throws IllegalArgumentException {
-        System.out.println(tx);
-        // Verify that the transaction is valid.
+        checkSignature(tx);
+    }
+
+    private void checkSignature(LedgerTransaction tx) {
+        // TODO Check that the Oracle on the parent contract has signed the Tx
     }
 }

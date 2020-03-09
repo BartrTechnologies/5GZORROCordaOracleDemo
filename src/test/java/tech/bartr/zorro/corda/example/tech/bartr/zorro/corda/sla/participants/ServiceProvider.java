@@ -8,11 +8,10 @@ import net.corda.core.messaging.DataFeed;
 import net.corda.core.node.services.Vault;
 import net.corda.testing.node.MockNetwork;
 import net.corda.testing.node.StartedMockNode;
-import tech.bartr.zorro.corda.consumer.flows.SLAContractRequestFlow;
 import tech.bartr.zorro.corda.contract.SLAContractState;
+import tech.bartr.zorro.corda.market.MarketPlace;
 import tech.bartr.zorro.corda.provider.ServiceManager;
 import tech.bartr.zorro.corda.provider.flows.SLAContractResponseFlow;
-import tech.bartr.zorro.corda.market.MarketPlace;
 import tech.bartr.zorro.corda.provider.flows.ServiceProvidedContractRequestFlow;
 
 import java.util.concurrent.ExecutionException;
@@ -49,14 +48,11 @@ public class ServiceProvider {
                     try {
                         ServiceManager.startService(slaContractState.getServiceType(), slaContractState.getServiceUrl());
 
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    startServiceProvidedFlow(slaContractState);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                        new Thread(() -> {
+                            try {
+                                startServiceProvidedFlow(slaContractState);
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
                         }).start();
 
@@ -71,9 +67,7 @@ public class ServiceProvider {
     private void startServiceProvidedFlow(SLAContractState parentContract) throws InterruptedException, ExecutionException, TimeoutException {
         ServiceProvidedContractRequestFlow flow = new ServiceProvidedContractRequestFlow();
         flow.setParentContract(parentContract);
-        mockNetwork.runNetwork();
         CordaFuture future = node.startFlow(flow);
-        mockNetwork.runNetwork();
         future.get(60, TimeUnit.SECONDS);
     }
 }

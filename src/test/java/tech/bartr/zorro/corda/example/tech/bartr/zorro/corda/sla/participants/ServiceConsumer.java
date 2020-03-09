@@ -15,7 +15,7 @@ import tech.bartr.zorro.corda.contract.SLAContractState;
 import tech.bartr.zorro.corda.contract.ServiceProvidedContractState;
 import tech.bartr.zorro.corda.market.MarketPlace;
 
-import java.util.UUID;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -26,6 +26,8 @@ public class ServiceConsumer {
     private StartedMockNode node;
 
     private String requestServiceURL = "http://localhost:8080/AUTHENTICATION";
+
+    private final CountDownLatch latch = new CountDownLatch(1);
 
     public void init(MockNetwork mockNetwork) {
         name = new CordaX500Name("London Borough Council", "London", "GB");
@@ -41,9 +43,10 @@ public class ServiceConsumer {
                 StateAndRef stateAndRef = (StateAndRef) update.getProduced().iterator().next();
                 if (stateAndRef.getState().getData() instanceof SLAContractState) {
                     System.out.println("Contract Signed.");
+                    // TODO Do some business logic...
                 } else if (stateAndRef.getState().getData() instanceof ServiceProvidedContractState) {
-                    SignedTransaction tx = node.getServices().getValidatedTransactions().getTransaction(stateAndRef.getRef().getTxhash());
-                    System.out.println("Service Started");
+                    latch.countDown();
+                    // TODO Do some business logic...
                 }
             }
         });
@@ -57,6 +60,8 @@ public class ServiceConsumer {
         requestFlow.setServiceUrl(requestServiceURL);
         CordaFuture future = node.startFlow(requestFlow);
         future.get(60, TimeUnit.SECONDS);
+
+        latch.await(120, TimeUnit.SECONDS);
     }
 
     public String getRequestedServiceURL() {
