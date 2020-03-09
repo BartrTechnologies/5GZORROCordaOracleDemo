@@ -58,3 +58,25 @@ publishing {
         }
     }
 }
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+            java.outputDir = file('bin/main')
+        }
+    }
+    test{
+        java {
+            srcDir 'src/test/java'
+            java.outputDir = file('bin/test')
+        }
+    }
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/integration-test/java')
+        }
+    }
+}
