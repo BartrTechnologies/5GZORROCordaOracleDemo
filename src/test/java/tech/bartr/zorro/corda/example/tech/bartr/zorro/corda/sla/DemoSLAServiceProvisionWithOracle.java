@@ -26,7 +26,8 @@ public class DemoSLAServiceProvisionWithOracle {
     private ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
     private final MockNetwork mockNetwork = new MockNetwork(new MockNetworkParameters(ImmutableList.of(
-            TestCordapp.findCordapp("tech.bartr.zorro.corda.contract"),
+            TestCordapp.findCordapp("tech.bartr.zorro.corda.contract.sla"),
+            TestCordapp.findCordapp("tech.bartr.zorro.corda.contract.provision"),
             TestCordapp.findCordapp("tech.bartr.zorro.corda.provider.flows"),
             TestCordapp.findCordapp("tech.bartr.zorro.corda.consumer.flows"),
             TestCordapp.findCordapp("tech.bartr.zorro.corda.oracle")

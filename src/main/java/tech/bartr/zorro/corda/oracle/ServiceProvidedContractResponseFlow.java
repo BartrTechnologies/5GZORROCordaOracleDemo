@@ -7,8 +7,7 @@ import net.corda.core.flows.InitiatedBy;
 import net.corda.core.flows.SignTransactionFlow;
 import net.corda.core.transactions.SignedTransaction;
 import org.jetbrains.annotations.NotNull;
-import tech.bartr.zorro.corda.consumer.flows.SLAContractRequestFlow;
-import tech.bartr.zorro.corda.contract.ServiceProvidedContractState;
+import tech.bartr.zorro.corda.contract.provision.ServiceProvidedContractState;
 import tech.bartr.zorro.corda.provider.flows.ServiceProvidedContractRequestFlow;
 
 @InitiatedBy(ServiceProvidedContractRequestFlow.class)

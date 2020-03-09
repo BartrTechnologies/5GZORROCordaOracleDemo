@@ -7,12 +7,11 @@ import net.corda.core.identity.CordaX500Name;
 import net.corda.core.identity.Party;
 import net.corda.core.messaging.DataFeed;
 import net.corda.core.node.services.Vault;
-import net.corda.core.transactions.SignedTransaction;
 import net.corda.testing.node.MockNetwork;
 import net.corda.testing.node.StartedMockNode;
 import tech.bartr.zorro.corda.consumer.flows.SLAContractRequestFlow;
-import tech.bartr.zorro.corda.contract.SLAContractState;
-import tech.bartr.zorro.corda.contract.ServiceProvidedContractState;
+import tech.bartr.zorro.corda.contract.sla.SLAContractState;
+import tech.bartr.zorro.corda.contract.provision.ServiceProvidedContractState;
 import tech.bartr.zorro.corda.market.MarketPlace;
 
 import java.util.concurrent.CountDownLatch;

@@ -1,4 +1,4 @@
-package tech.bartr.zorro.corda.contract;
+package tech.bartr.zorro.corda.contract.sla;
 
 import net.corda.core.contracts.BelongsToContract;
 import net.corda.core.contracts.CommandData;
@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
-@BelongsToContract(tech.bartr.zorro.corda.contract.SLAContract.class)
+@BelongsToContract(SLAContract.class)
 public class SLAContractState implements ContractState {
 
     private Party provider;
@@ -70,6 +70,8 @@ public class SLAContractState implements ContractState {
     }
 
     public interface Commands extends CommandData {
-        class INITIATE implements SLAContractState.Commands {}
+        class INITIATE implements SLAContractState.Commands {
+
+        }
     }
 }

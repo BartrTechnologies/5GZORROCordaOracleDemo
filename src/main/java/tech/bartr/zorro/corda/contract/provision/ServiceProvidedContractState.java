@@ -1,9 +1,11 @@
-package tech.bartr.zorro.corda.contract;
+package tech.bartr.zorro.corda.contract.provision;
 
 import net.corda.core.contracts.BelongsToContract;
+import net.corda.core.contracts.CommandData;
 import net.corda.core.contracts.ContractState;
 import net.corda.core.identity.AbstractParty;
 import org.jetbrains.annotations.NotNull;
+import tech.bartr.zorro.corda.contract.sla.SLAContractState;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,5 +47,10 @@ public class ServiceProvidedContractState implements ContractState {
     @Override
     public List<AbstractParty> getParticipants() {
         return Arrays.asList(slaContractState.getConsumer(), slaContractState.getProvider(), slaContractState.getOracle());
+    }
+
+    public interface Commands extends CommandData {
+        class INITIATE implements ServiceProvidedContractState.Commands {
+        }
     }
 }

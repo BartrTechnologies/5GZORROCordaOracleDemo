@@ -8,7 +8,7 @@ import net.corda.core.messaging.DataFeed;
 import net.corda.core.node.services.Vault;
 import net.corda.testing.node.MockNetwork;
 import net.corda.testing.node.StartedMockNode;
-import tech.bartr.zorro.corda.contract.SLAContractState;
+import tech.bartr.zorro.corda.contract.sla.SLAContractState;
 import tech.bartr.zorro.corda.market.MarketPlace;
 import tech.bartr.zorro.corda.provider.ServiceManager;
 import tech.bartr.zorro.corda.provider.flows.SLAContractResponseFlow;
@@ -50,7 +50,7 @@ public class ServiceProvider {
 
                         new Thread(() -> {
                             try {
-                                startServiceProvidedFlow(slaContractState);
+                                startServiceProvidedFlow(stateAndRef);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -64,9 +64,9 @@ public class ServiceProvider {
         });
     }
 
-    private void startServiceProvidedFlow(SLAContractState parentContract) throws InterruptedException, ExecutionException, TimeoutException {
+    private void startServiceProvidedFlow(StateAndRef<SLAContractState> inputState) throws InterruptedException, ExecutionException, TimeoutException {
         ServiceProvidedContractRequestFlow flow = new ServiceProvidedContractRequestFlow();
-        flow.setParentContract(parentContract);
+        flow.setParentContract(inputState);
         CordaFuture future = node.startFlow(flow);
         future.get(60, TimeUnit.SECONDS);
     }

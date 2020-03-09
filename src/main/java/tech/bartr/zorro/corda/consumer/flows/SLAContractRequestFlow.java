@@ -12,8 +12,8 @@ import net.corda.core.flows.StartableByRPC;
 import net.corda.core.identity.Party;
 import net.corda.core.transactions.SignedTransaction;
 import net.corda.core.transactions.TransactionBuilder;
-import tech.bartr.zorro.corda.contract.SLAContract;
-import tech.bartr.zorro.corda.contract.SLAContractState;
+import tech.bartr.zorro.corda.contract.sla.SLAContract;
+import tech.bartr.zorro.corda.contract.sla.SLAContractState;
 
 import java.util.Collections;
 
@@ -79,7 +79,7 @@ public class SLAContractRequestFlow extends FlowLogic<Void> {
         // Create Tx Builder and Add the Components
         TransactionBuilder txBuilder = new TransactionBuilder(notary)
                 .addOutputState(slaContractState, SLAContract.ID)
-                .addCommand(new SLAContractState.Commands.INITIATE(), provider.getOwningKey());
+                .addCommand(new SLAContractState.Commands.INITIATE(), getOurIdentity().getOwningKey(), provider.getOwningKey());
 
         SignedTransaction signedTransaction = getServiceHub().signInitialTransaction(txBuilder);
 
